@@ -3,9 +3,10 @@ Various algorithms for creating a Voronoi diagram from a set of points in ***Pyt
 
 A Voronoi diagram takes a set **S** of *n* points as input. For *n* ∈ **S**, the diagram contains a polygon, such that *n* is the closest point in **S** to any point in the polygon.
 
-[Formal Definition](https://en.wikipedia.org/wiki/Voronoi_diagram#Formal_definition)
+-> [Formal Definition](https://en.wikipedia.org/wiki/Voronoi_diagram#Formal_definition)
 
-[](https://github.com/euan-turner/Voronoi/blob/main/images/diagram.png)
+
+![Alt text](https://github.com/euan-turner/Voronoi/blob/main/images/diagram.png)
 
 # Libraries
 * shapely

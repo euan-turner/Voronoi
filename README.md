@@ -5,7 +5,7 @@ A Voronoi diagram takes a set **S** of *n* points as input. For *n* ∈ **S**, t
 
 [Formal Definition](https://en.wikipedia.org/wiki/Voronoi_diagram#Formal_definition)
 
-[](https://euan-turner/Voronoi/images/diagram.png)
+[](https://github.com/euan-turner/Voronoi/blob/main/images/diagram.png)
 
 # Libraries
 * shapely

@@ -5,14 +5,21 @@ A Voronoi diagram takes a set **S** of *n* points as input. For *n* ∈ **S**, t
 
 [Formal Definition](https://en.wikipedia.org/wiki/Voronoi_diagram#Formal_definition)
 
+[](https://euan-turner/Voronoi/images/diagram.png)
+
 # Libraries
 * shapely
 * matplotlib
 * random
 * dataclasses
+* pygame
+
+# Pixels
+Extremely slow method of checking each individual location
 
 # Iterative Addition
 Incrementally adding points, and updating the regions of existing points, until the entire set has been exhausted.
+Time: O(n<sup>2</sup>)
 
 # Divide and Conquer
 Not started

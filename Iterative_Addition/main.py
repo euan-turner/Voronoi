@@ -65,18 +65,12 @@ def voronoi(points : list, bound_poly : Polygon):
             bisector = perp_bisector(point, prev_pr.point, max(bound_poly.exterior.coords[:]))
             if len(bisector.intersection(prev_pr.region).coords[:]) > 1:
                 cell1, cell2 = split(prev_pr.region, bisector)
-            # ##Check if bisector intersects previous region
-            # if bisector.intersects(prev_pr.region):
-            #     split_points = bisector.intersection(prev_pr.region)
-            #     if len(split_points.coords[:]) > 1:
-            #         cell1, cell2 = split(prev_pr.region, extend(split_points))
-                    #print(prev_pr.region.exterior.coords[:])
 
-                if prev_pr.point.within(cell1):
+                if cell1.contains(prev_pr.point) or cell1.intersects(prev_pr.point):
                     ##cell2 is removed from prev_pr
                     prev_pr.region = cell1
                     cells.append(cell2)
-                elif prev_pr.point.within(cell2):
+                elif cell2.contains(prev_pr.point) or cell2.intersects(prev_pr.point):
                     ##cell1 is removed from prev_pr
                     prev_pr.region = cell2
                     cells.append(cell1)
@@ -94,7 +88,7 @@ def voronoi(points : list, bound_poly : Polygon):
             pr = Point_Region(point, new_poly)
         
         point_regions.append(pr)
-    
+
     return point_regions
 
 
@@ -137,36 +131,6 @@ def perp_bisector(a : Point, b : Point, dims : (int,int)) -> LineString:
 
     return LineString([start,end])
 
-def extend(line : LineString) -> LineString:
-    """
-    Extend a LineString, to guard against accuracy errors
-
-    Parameters
-    ----------
-    line: line to extend
-
-    Returns
-    -------
-    LineString
-    """
-    coords = line.coords[:]
-    p1 = list(coords[0])
-    p2 = list(coords[1])
-    deltax = abs(p2[0] - p1[0])
-    deltay = abs(p2[1] - p1[1])
-    if p1[0] < p2[0]:
-        p1[0] -= 0.1*deltax
-        p2[0] += 0.1*deltax
-    else:
-        p1[0] += 0.1*deltax
-        p2[0] -= 0.1*deltax
-    if p1[1] < p2[1]:
-        p1[1] -= 0.1*deltay
-        p2[1] += 0.1*deltay
-    else:
-        p1[1] += 0.1*deltay
-        p2[1] -= 0.1*deltay
-    return LineString([p1,p2])
 
 
 def display(orig_points : list, voronoi_prs : list):
@@ -188,14 +152,16 @@ def display(orig_points : list, voronoi_prs : list):
     fig = plt.figure(figsize = (8,8))
     
     for pr in voronoi_prs:
-        plt.plot(pr.point.x, pr.point.y, 'ro')
-        plt.plot(*pr.region.exterior.xy)
+        plt.fill(*pr.region.exterior.xy)
+        plt.plot(*pr.region.exterior.xy, 'k')
+        plt.plot(pr.point.x, pr.point.y, 'ko')
    
 
     plt.show()
 
 
-original_points = create_points(250,250,20)
+original_points = create_points(250,250,40)
 bound = box(0,0,250,250)
 prs = voronoi(original_points, bound)
 display(original_points, prs)
+

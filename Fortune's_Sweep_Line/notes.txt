@@ -1,0 +1,38 @@
+Site Event - 
+Sweepline passes a new site. A new parabola is added to the beach line.
+Two edges begin at the intersections of the new parabola, and the neighbours.
+These "half-edges" are associated with both parabolas forming them.
+
+Circle/Edge-Intersection Event - 
+A parabola in the beach line disappears as it is squeezed out by its neighbours. 
+This occurs when two neighbouring "half-edges", on either side of the parabola, intersect.
+The point of occurrence is equidistant to the focii of the three parabolas, so becomes a Voronoi vertex.
+The y-coord of the sweep line when a circle event occurs is given by:
+    y-coord of intersection point - distance between focus of any involved arcs and the intersection point
+This circle event can then be added to the event queue, but may be removed if invalidated by subsequent changes to the beach line.
+This point becomes the end point for both half-edges associated with the disappearing parabola.
+
+
+The beachline only changes at site or circle events.
+
+
+for each point
+    push a site event to event queue
+
+while event queue is not empty
+    pop the top event
+    if event is a site event
+        insert new parabola in beach line
+        check for new circle events
+        if new circle events exist
+            push circle event to event queue
+    else -> event is a circle event
+        create a voronoi vertex
+        remove squeezed parabola from beach line
+        delete invalidated events
+        check for new circle events
+        if new circle events exist
+            push circle event to queue
+
+
+
